@@ -7,20 +7,55 @@
 // Example: 5! = 5 x 4 x 3 x 2 x 1 = 120
 // factorial(5); // 120
 var factorial = function(n) {
+    if (n < 0) {
+        return null;
+    } else if ( n === 0) {
+        return 1;
+    } else {
+    return n * factorial(n-1);
+    }
 };
 
 // 2. Compute the sum of an array of integers.
 // sum([1,2,3,4,5,6]); // 21
 var sum = function(array) {
+    console.log(array);
+    if (array.length === 0) {
+        return 0;
+    }
+    var rest = array.slice();
+    var next = rest.pop();
+    console.log('this is a message!!!!!!!!!!!!');
+    console.log('this is next ' + next);
+    console.log('this is rest ' + rest);
+    return next + sum(rest);
 };
 
 // 3. Sum all numbers in an array containing nested arrays.
 // arraySum([1,[2,3],[[4]],5]); // 15
 var arraySum = function(array) {
+    var sum = 0;
+
+    for (var i = 0; i < array.length; i++) {
+        if (Array.isArray(array[i])) {
+            sum += arraySum(array[i]);
+        } else {
+            sum += array[i];
+        }
+    }
+    return sum;
 };
 
 // 4. Check if a number is even.
 var isEven = function(n) {
+    if (n === 0) {
+        return true;
+    } else if (n === 1) {
+        return false;
+    }
+    n = Math.abs(n);
+    n = n-2;
+    return isEven(n);
 };
 
 // 5. Sum all integers below a given integer.
@@ -129,6 +164,17 @@ var rMap = function(array, callback) {
 // countKeysInObj(obj, 'r') // 1
 // countKeysInObj(obj, 'e') // 2
 var countKeysInObj = function(obj, key) {
+    var keyCount = 0;
+    for (var bigkey in obj) {
+        if (bigkey === key) {
+            keyCount++;
+        }
+        var type = obj[bigkey];
+        if (typeof type === 'object') {
+            keyCount += countKeysInObj(type, key)
+        }
+    }
+    return keyCount;
 };
 
 // 23. Write a function that counts the number of times a value occurs in an object.
@@ -136,6 +182,17 @@ var countKeysInObj = function(obj, key) {
 // countValuesInObj(obj, 'r') // 2
 // countValuesInObj(obj, 'e') // 1
 var countValuesInObj = function(obj, value) {
+    var valueCount = 0;
+    for (var bigkey in obj) {
+        if (obj[bigkey] === value) {
+            valueCount++;
+        }
+        var type = obj[bigkey];
+        if (typeof type === 'object') {
+            valueCount += countValuesInObj(type, value)
+        }
+    }
+    return valueCount;
 };
 
 // 24. Find all keys in an object (and nested objects) by a provided name and rename
